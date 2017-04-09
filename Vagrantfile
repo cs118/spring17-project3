@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$INSTALL_BASE = <<SCRIPT
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update
+  apt-get -y upgrade
+  apt-get -y install build-essential vim-nox emacs
+  apt-get -y install git python-dev python-setuptools flex bison traceroute libbz2-dev libssl-dev
+  apt-get -y install mininet expect
+  apt-get -y install xauth
+  apt-get -y install libzeroc-ice35-dev libboost-all-dev
+
+  service openvswitch-controller stop || true
+  service openvswitch-controller disable || true
+
+  mkdir -p /opt
+  # Install POX controller
+  git clone -b eel https://github.com/noxrepo/pox /opt/pox
+
+  # Install packet redirector to simpler router and run it as a service
+  pip install ucla-cs118
+  cp /vagrant/pox.service /etc/systemd/system/
+  systemctl daemon-reload
+  systemctl enable pox.service
+  systemctl start pox.service
+SCRIPT
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "boxcutter/ubuntu1604"
+
+  config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+  #
+    # Customize the amount of memory on the VM:
+    vb.memory = "1024"
+  end
+
+  config.vm.provision "shell", privileged: true, inline: $INSTALL_BASE
+end
+
+
