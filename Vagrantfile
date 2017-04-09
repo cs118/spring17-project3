@@ -11,10 +11,10 @@ $INSTALL_BASE = <<SCRIPT
   apt-get -y install xauth
   apt-get -y install libzeroc-ice35-dev libboost-all-dev
 
-  service openvswitch-controller stop || true
-  service openvswitch-controller disable || true
+  easy_install pip
 
-  mkdir -p /opt
+  rm -Rf /opt/pox
+  mkdir -p /opt/pox
   # Install POX controller
   git clone -b eel https://github.com/noxrepo/pox /opt/pox
 

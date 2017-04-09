@@ -1,5 +1,5 @@
-# UCLA CS118 Project 3 (Simple Router)
-======================================
+UCLA CS118 Project 3 (Simple Router)
+====================================
 
 For more detailed information about the project and starter code, refer to the [project description](http://web.cs.ucla.edu/classes/spring17/cs118/project-3.html).
 
